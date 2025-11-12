@@ -1,0 +1,160 @@
+================================================================================
+WEALTH OF NATIONS - SUMMARY REPORT FOR 2022
+================================================================================
+
+Report Generated: 2025-11-12 10:29:39
+Total Countries Analyzed: 265
+
+--------------------------------------------------------------------------------
+GDP_PER_CAPITA
+--------------------------------------------------------------------------------
+
+Top 10 Countries (Highest Values):
+  MCO: 226,052.00
+  LIE: 186,821.88
+  LUX: 123,719.66
+  BMU: 121,613.94
+  NOR: 109,269.52
+  IRL: 105,234.51
+  CHE: 94,394.51
+  CYM: 92,202.15
+  SGP: 90,299.07
+  QAT: 88,701.46
+
+Inequality Metrics:
+  Gini Coefficient: 0.6369
+  Mean: 19,495.39
+  Median: 7,630.92
+  Standard Deviation: 28,941.31
+  Coefficient of Variation: 1.4845
+  90th/10th Percentile Ratio: 44.91
+
+
+--------------------------------------------------------------------------------
+LIFE_EXPECTANCY
+--------------------------------------------------------------------------------
+
+Top 10 Countries (Highest Values):
+  MCO: 85.75
+  SMR: 85.71
+  LIE: 84.12
+  AND: 84.02
+  JPN: 84.00
+  PYF: 83.86
+  HKG: 83.66
+  CHE: 83.60
+  GIB: 83.52
+  AUS: 83.20
+
+Inequality Metrics:
+  Gini Coefficient: 0.0561
+  Mean: 72.80
+  Median: 73.70
+  Standard Deviation: 7.63
+  Coefficient of Variation: 0.1049
+  90th/10th Percentile Ratio: 1.30
+
+
+--------------------------------------------------------------------------------
+HEALTHCARE_SPENDING_PER_CAPITA
+--------------------------------------------------------------------------------
+
+Top 10 Countries (Highest Values):
+  USA: 12,434.43
+  NAC: 11,789.31
+  CHE: 10,963.43
+  NOR: 8,692.58
+  MCO: 7,655.94
+  LUX: 7,022.63
+  PST: 6,984.79
+  ISL: 6,851.63
+  AUS: 6,731.00
+  DNK: 6,456.08
+
+Inequality Metrics:
+  Gini Coefficient: 0.6983
+  Mean: 1,287.95
+  Median: 401.87
+  Standard Deviation: 2,133.06
+  Coefficient of Variation: 1.6562
+  90th/10th Percentile Ratio: 87.93
+
+
+--------------------------------------------------------------------------------
+INFANT_MORTALITY_RATE
+--------------------------------------------------------------------------------
+
+Top 10 Countries (Lowest Rates):
+  SMR: 1.40
+  EST: 1.70
+  FIN: 1.80
+  SGP: 1.80
+  JPN: 1.80
+  SVN: 1.90
+  NOR: 1.90
+  BLR: 2.00
+  LUX: 2.00
+  SWE: 2.00
+
+Inequality Metrics:
+  Gini Coefficient: 0.4728
+  Mean: 20.96
+  Median: 14.20
+  Standard Deviation: 20.22
+  Coefficient of Variation: 0.9649
+  90th/10th Percentile Ratio: 15.09
+
+
+--------------------------------------------------------------------------------
+EDUCATION_EXPENDITURE_PCT_GDP
+--------------------------------------------------------------------------------
+
+Top 10 Countries (Highest Values):
+  KIR: 14.79
+  TUV: 13.76
+  VUT: 10.70
+  NAM: 9.39
+  SLB: 8.49
+  CUB: 8.44
+  MHL: 7.70
+  BOL: 7.58
+  BTN: 7.47
+  SWE: 7.32
+
+Inequality Metrics:
+  Gini Coefficient: 0.2335
+  Mean: 4.13
+  Median: 3.82
+  Standard Deviation: 1.90
+  Coefficient of Variation: 0.4597
+  90th/10th Percentile Ratio: 2.67
+
+
+--------------------------------------------------------------------------------
+POPULATION
+--------------------------------------------------------------------------------
+
+Top 10 Countries (Highest Values):
+  WLD: 7,990,399,768.00
+  IBT: 6,795,050,443.00
+  LMY: 6,438,272,260.00
+  MIC: 5,846,790,764.00
+  IBD: 4,928,522,353.00
+  EAR: 3,470,644,834.00
+  LMC: 3,043,358,377.00
+  UMC: 2,803,432,387.00
+  EAS: 2,379,648,196.00
+  LTE: 2,324,125,644.00
+
+Inequality Metrics:
+  Gini Coefficient: 0.8813
+  Mean: 325,118,642.00
+  Median: 10,486,941.00
+  Standard Deviation: 1,001,833,752.93
+  Coefficient of Variation: 3.0814
+  90th/10th Percentile Ratio: 9080.33
+
+
+================================================================================
+END OF REPORT
+================================================================================
