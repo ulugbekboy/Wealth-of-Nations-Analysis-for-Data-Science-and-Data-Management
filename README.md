@@ -101,7 +101,6 @@ Displays on screen
 Total runtime: 2-5 minutes (depends on internet speed)
 Expected Output:
 
-=
 WEALTH OF NATIONS: Economic Prosperity & Well-being Analysis
 =
 
@@ -111,7 +110,7 @@ Fetching Life_expectancy...
 ...
 
 DESCRIPTIVE STATISTICS
-
+=
 
 GDP_per_capita:
   Mean: 12,456.78
@@ -119,13 +118,13 @@ GDP_per_capita:
 ...
 
 CORRELATION ANALYSIS
-
+=
 Pearson Correlation: 0.7834
 P-value: 2.34e-156
 
 
 GENERATING VISUALIZATIONS
-
+=
 1. Creating correlation heatmap...
 2. Creating GDP vs Life Expectancy scatter plots...
 ...
@@ -136,7 +135,7 @@ outputs/figures/ - Contains 5 PNG visualization files
 outputs/reports/ - Contains statistical reports (if implemented)
 
 📈 Data Sources (https://pypi.org/project/wbgapi/) 
-
+=
 Source: World Bank Open Data
 API Package: wbgapi Python library
 Coverage: 217 economies, 2000-2022 (23 years)
