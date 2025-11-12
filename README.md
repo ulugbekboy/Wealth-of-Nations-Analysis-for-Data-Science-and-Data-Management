@@ -101,9 +101,9 @@ Displays on screen
 Total runtime: 2-5 minutes (depends on internet speed)
 Expected Output:
 
-======================================================================
+=
 WEALTH OF NATIONS: Economic Prosperity & Well-being Analysis
-======================================================================
+=
 
 Fetching data from World Bank API...
 Fetching GDP_per_capita...
