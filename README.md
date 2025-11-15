@@ -1,13 +1,10 @@
 # Project Topic
 
-### The Wealth of Nations. Dive into the intricate relationship between a country's economic prosperity and the well-being of its population. This project invites you to explore decades of global development data to uncover trends and correlations. You could analyze how indicators like GDP per capita relate to life expectancy, healthcare spending, or child mortality rates. Create compelling visualizations, such as time-series charts or global maps, to tell a story about global health and economics. The goal is to build an analytical project that reveals patterns in how nations thrive. Data for this project can be sourced directly from the World Bank Open Data portal or via its Python API.
-
+### The Wealth of Nations.
 
 1. Libraries
 2. Read the datas
-3. Clarify and 
-
-
+3. Clarify and Analysis
 
 🌍 Wealth of Nations Analysis
 A data science project analyzing the relationship between economic prosperity (GDP per capita) and population well-being indicators (life expectancy, healthcare spending, infant mortality) across countries from 2000-2022.
@@ -21,34 +18,20 @@ Are there differences between income groups?
 
 📁 Project Structure
 wealth-of-nations-analysis/
-│
+
 ├── project.py              # Main analysis script (run this!)
 ├── requirements.txt        # Python dependencies list
 ├── .gitignore             # Git ignore rules (excludes venv, data, outputs)
 ├── README.md              # This documentation file
 ├── task explanation.md    # Project assignment description
-│
 ├── venv/                  # Virtual environment (NOT in Git)
-│
 ├── data/                  # Data directory (created automatically)
 │   ├── raw/              # Raw data from World Bank API
 │   └── processed/        # Cleaned and processed data
-│
 └── outputs/              # Generated outputs (created automatically)
     ├── figures/         # Visualization outputs (.png files)
     └── reports/         # Statistical reports (.txt, .json)
-Note: venv/, data/, and outputs/ folders are NOT tracked in Git because:
 
-venv/ - Each user creates their own virtual environment
-data/ - Data is fetched from API (don't need to store it)
-outputs/ - Results are generated when you run the code
-
-🔧 Setup Instructions
-Prerequisites
-
-Python 3.8 or higher (Download here)
-Internet connection (for World Bank API access)
-Git (Download here)
 
 Step-by-Step Installation
 1. Clone the Repository
@@ -67,16 +50,13 @@ Now that venv is activated, install the required packages:
 bashpip install -r requirements.txt
 This installs:
 
-wbgapi - World Bank API access
+wbgapi (https://pypi.org/project/wbgapi/) - World Bank API access
+
 pandas - Data manipulation
 numpy - Numerical computing
 scipy - Scientific computing
 matplotlib - Plotting
 seaborn - Statistical visualization
-
-5. Verify Installation
-Check that everything installed correctly:
-bashpip list
 
 🚀 How to Run the Analysis
 
@@ -101,33 +81,30 @@ Displays on screen
 Total runtime: 2-5 minutes (depends on internet speed)
 Expected Output:
 
-======================================================================
+
 WEALTH OF NATIONS: Economic Prosperity & Well-being Analysis
-======================================================================
+
 
 Fetching data from World Bank API...
 Fetching GDP_per_capita...
 Fetching Life_expectancy...
 ...
-
-======================================================================
 DESCRIPTIVE STATISTICS
-======================================================================
 
 GDP_per_capita:
   Mean: 12,456.78
   Median: 5,234.56
 ...
 
-======================================================================
+
 CORRELATION ANALYSIS
-======================================================================
+
 Pearson Correlation: 0.7834
 P-value: 2.34e-156
 
-======================================================================
+
 GENERATING VISUALIZATIONS
-======================================================================
+
 1. Creating correlation heatmap...
 2. Creating GDP vs Life Expectancy scatter plots...
 ...
