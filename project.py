@@ -3,6 +3,13 @@ Wealth of Nations: Economic Prosperity and Population Well-being Analysis
 
 This module performs comprehensive analysis of the relationship between economic
 indicators and well-being metrics using World Bank data.
+As Indicators i have taken :
+- GDP_per_capita
+- Life_expectancy
+- Healthcare_spending_per_capita
+- Infant_mortality_rate
+- Education_expenditure_pct_GDP
+- Population
 
 """
 
@@ -13,15 +20,12 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import List, Dict, Tuple
-import warnings
-warnings.filterwarnings('ignore')
 
 plt.style.use('seaborn-v0_8-darkgrid')
 sns.set_palette("husl")
 
 
 class WealthOfNationsAnalyzer:
-    
     def __init__(self, start_year: int = 2000, end_year: int = 2022):
         self.start_year = start_year
         self.end_year = end_year
@@ -341,10 +345,8 @@ class WealthVisualizer:
 
 def main():
     
-    print("=" * 70)
+
     print("WEALTH OF NATIONS: Economic Prosperity & Well-being Analysis")
-    print("=" * 70)
-    print()
     
     analyzer = WealthOfNationsAnalyzer(start_year=2000, end_year=2022)
     
