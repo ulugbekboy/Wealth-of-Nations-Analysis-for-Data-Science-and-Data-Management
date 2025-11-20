@@ -1,4 +1,6 @@
 # Project Topic
+"""
+Wealth of Nations: Economic Prosperity and Population Well-being Analysis
 
 ### The Wealth of Nations.
 
@@ -115,10 +117,34 @@ outputs/figures/ - Contains 5 PNG visualization files
 outputs/reports/ - Contains statistical reports (if implemented)
 
 📈 Data Sources (https://pypi.org/project/wbgapi/) 
-
+=
 Source: World Bank Open Data
 API Package: wbgapi Python library
 Coverage: 217 economies, 2000-2022 (23 years)
 Total data points: ~30,000+ observations
 
 Last Updated: 30 November 2025
+
+
+
+
+
+
+==1==
+git init
+cheking git config --list
+git config --global user.name "username"
+git config --global user.email "your.email@example.com"
+
+git status
+git add .
+git commit -m "____"
+
+git remote add origin https://github.com/yourusername/wealth-of-nations-analysis.git
+git remote -v
+
+git branch -M main
+git push -u origin main
+
+--activate venv envirement--
+source venv/bin/activate
