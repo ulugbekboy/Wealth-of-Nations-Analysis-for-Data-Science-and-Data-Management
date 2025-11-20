@@ -2,19 +2,6 @@
 """
 Wealth of Nations: Economic Prosperity and Population Well-being Analysis
 
-This project performs comprehensive analysis of the relationship between economic
-indicators and well-being metrics of a country using World Bank data.
-1. As indicators I have taken following indicators:
-- GDP_per_capita
-- Life_expectancy
-- Healthcare_spending_per_capita
-- Infant_mortality_rate
-- Education_expenditure_pct_GDP
-- Population
-
-"""
-
-2. Fetching all datas from World Bank API accrging to set indicators.
 ### The Wealth of Nations.
 
 1. Libraries
@@ -116,7 +103,6 @@ CORRELATION ANALYSIS
 
 Pearson Correlation: 0.7834
 P-value: 2.34e-156
-
 
 
 GENERATING VISUALIZATIONS
