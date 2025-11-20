@@ -15,7 +15,6 @@ indicators and well-being metrics of a country using World Bank data.
 """
 
 2. Fetching all datas from World Bank API accrging to set indicators.
-### The Wealth of Nations.
 
 1. Libraries
 2. Read the datas
@@ -30,23 +29,6 @@ How does GDP per capita correlate with life expectancy?
 What is the relationship between healthcare spending and infant mortality?
 How have these indicators evolved over time?
 Are there differences between income groups?
-
-📁 Project Structure
-wealth-of-nations-analysis/
-
-├── project.py              # Main analysis script (run this!)
-├── requirements.txt        # Python dependencies list
-├── .gitignore             # Git ignore rules (excludes venv, data, outputs)
-├── README.md              # This documentation file
-├── task explanation.md    # Project assignment description
-├── venv/                  # Virtual environment (NOT in Git)
-├── data/                  # Data directory (created automatically)
-│   ├── raw/              # Raw data from World Bank API
-│   └── processed/        # Cleaned and processed data
-└── outputs/              # Generated outputs (created automatically)
-    ├── figures/         # Visualization outputs (.png files)
-    └── reports/         # Statistical reports (.txt, .json)
-
 
 Step-by-Step Installation
 1. Clone the Repository
@@ -96,7 +78,6 @@ Displays on screen
 Total runtime: 2-5 minutes (depends on internet speed)
 Expected Output:
 
-
 WEALTH OF NATIONS: Economic Prosperity & Well-being Analysis
 
 
@@ -116,8 +97,6 @@ CORRELATION ANALYSIS
 
 Pearson Correlation: 0.7834
 P-value: 2.34e-156
-
-
 
 GENERATING VISUALIZATIONS
 
@@ -139,11 +118,6 @@ Total data points: ~30,000+ observations
 
 Last Updated: 30 November 2025
 
-
-
-
-
-
 ==1==
 git init
 cheking git config --list
@@ -162,3 +136,4 @@ git push -u origin main
 
 --activate venv envirement--
 source venv/bin/activate
+
