@@ -1,5 +1,20 @@
 # Project Topic
+"""
+Wealth of Nations: Economic Prosperity and Population Well-being Analysis
 
+This project performs comprehensive analysis of the relationship between economic
+indicators and well-being metrics of a country using World Bank data.
+1. As indicators I have taken following indicators:
+- GDP_per_capita
+- Life_expectancy
+- Healthcare_spending_per_capita
+- Infant_mortality_rate
+- Education_expenditure_pct_GDP
+- Population
+
+"""
+
+2. Fetching all datas from World Bank API accrging to set indicators.
 ### The Wealth of Nations.
 
 1. Libraries
@@ -123,3 +138,27 @@ Coverage: 217 economies, 2000-2022 (23 years)
 Total data points: ~30,000+ observations
 
 Last Updated: 30 November 2025
+
+
+
+
+
+
+==1==
+git init
+cheking git config --list
+git config --global user.name "username"
+git config --global user.email "your.email@example.com"
+
+git status
+git add .
+git commit -m "____"
+
+git remote add origin https://github.com/yourusername/wealth-of-nations-analysis.git
+git remote -v
+
+git branch -M main
+git push -u origin main
+
+--activate venv envirement--
+source venv/bin/activate
