@@ -73,7 +73,7 @@ def main():
     print("Analysis result")
     analyzer = WealthOfNationsAnalyzer(start_year=2000,end_year=2022)
     analyzer.fetching()
-
+    print("hello")
 
 if __name__ == "__main__":
     main()
