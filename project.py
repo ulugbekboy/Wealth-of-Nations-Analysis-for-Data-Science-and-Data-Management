@@ -49,23 +49,64 @@ class WealthOfNationsAnalyzer:
         print(f"Fetched successfully {self.data.shape}")
         return self.data
     
-
     def clean_data(self) -> pd.DataFrame:
-        return ""
-    
+        print("Cleaning data ...")
+        for indicator in self.indicators.values():
+            if indicator in self.data.columns:
+                self.data[indicator] = pd.to_numeric(self.data[indicator], errors="coerce") ##converting to numerical data and making NaN were N/A
+        
+        self.data = self.data.dropna(how="all", subset=list(self.indicators.values())) ## removing completely empty colums
+        countries = wb.economy.DataFrame()  ## calling the wb
+        income_dict = countries["incomeLevel"].to_dict()   
+        self.data["income_group"] = self.data["economy"].map(income_dict)  ## adding new column incomeLevel  
 
+        region_dict = countries["region"].to_dict()
+        self.data["region"] = self.data["economy"].map(region_dict) ## adding new column region  
+
+        print(f"Data Cleaned ...{self.data.shape}")
+        return self.data
+    
     def compute_correlation(self) -> pd.DataFrame:
-        return ""
+        all_data = list(self.indicators.values())
+        correlation_matrix = self.data[all_data].corr()   # find the correlations of the indicator values
+        print(correlation_matrix)
+        return correlation_matrix
     
     def compute_statistics(self) -> Dict:
-        return ""
+        stats_dict = {}      # to calculate the statistical parameters of all indicators
+        for indicator in self.indicators.values():
+            stats_dict[indicator] = {
+                "mean": np.nanmean(self.data[indicator]),
+                "median":np.nanmedian(self.data[indicator]),
+                "std":np.nanstd(self.data[indicator]),
+                "min":np.nanmin(self.data[indicator]),
+                "max":np.nanmax(self.data[indicator])
+            }
+        print(stats_dict)
+        return stats_dict
     
     def analyze_gdp_life_expectancy(self) -> Tuple[float,float]:
-        return ""
-    
-    def analyze_trends_by_income(self) -> pd.DataFrame:
-        return ""
+        filtered_data = self.data.dropna(subset = ["GDP_per_capita", "Life_expectancy"]) # choosing only colums to analyze 
 
+        if len(filtered_data) > 0:
+            correlation, p_value  = stats.pearsonr(
+                filtered_data["GDP_per_capita"],
+                filtered_data["Life_expectancy"],
+            )
+            return correlation, p_value
+        return None,None
+
+    def analyze_trends_by_income(self) -> pd.DataFrame:
+        if "income_group" in self.data.columns:
+            trends = self.data.groupby(['year','income_year']).agg({
+               'GDP_per_capita': 'mean',
+               'Life_expectancy': 'mean',
+               'Infant_mortality_rate': 'mean',
+               'Healthcare_spending_per_capita': 'mean'
+            }).reset_index()
+            return trends
+        return None
+    
 class Visualizer():
     pass
 
@@ -73,7 +114,17 @@ def main():
     print("Analysis result")
     analyzer = WealthOfNationsAnalyzer(start_year=2000,end_year=2022)
     analyzer.fetching()
-    print("hello")
+    analyzer.clean_data()
+    print("-- Analysis of the indicators --")
+
+    print("1.")
+    stats = analyzer.compute_statistics()
+    for indicator,values in stats.items():
+        print(f"\n {indicator}:")
+        for stat_name, stat_value in values.items():
+            print(f"{stat_name.capitalize()}:{stat_value:,.2f}")
+
+
 
 if __name__ == "__main__":
     main()
