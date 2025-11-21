@@ -7,6 +7,27 @@ The project will be evaluated based on the following seven criteria. The total s
 1. GitHub Usage (5 points)
 This criterion assesses your ability to use Git and GitHub for version control, a fundamental practice in modern software and data science development. The project should be hosted in a GitHub repository with: a clear and informative README.md file, explaining what the project is about, listing important information (e.g., data sources, libraries), and providing clear instructions on how to setup and run the code; a well-configured .gitignore file to exclude unnecessary files; a meaningful commit history, with frequent and atomic commits, having descriptive messages.
 
+==1==
+git init
+cheking git config --list
+git config --global user.name "username"
+git config --global user.email "your.email@example.com"
+
+git status
+git add .
+git commit -m "____"
+
+git remote add origin https://github.com/yourusername/wealth-of-nations-analysis.git
+git remote -v
+
+git branch -M main
+git push -u origin main
+
+--activate venv envirement--
+source venv/bin/activate
+
+pip freeze > req.txt
+
 2. Project Organization (5 points)
 This criterion evaluates the structure and quality of your codebase. A well-organized project should: be logically organized into modules/scripts; have functions and classes with clear docstrings explaining their purpose, parameters, and return values; respect Python style guide, using consistent naming conventions, proper indentation, and clear variable names; provide a requirements.txt file, listing all the necessary Python libraries and their versions.
 

@@ -112,7 +112,7 @@ class Visualizer():
         print(self.data)
 
 
-    def plot_correlation_heatmap(self,save_path: str =None):
+    def plot_correlation_heatmap(self,save_path: str = None):
 
         corr_matrix = self.analyzer.compute_correlation()
         print(corr_matrix)
