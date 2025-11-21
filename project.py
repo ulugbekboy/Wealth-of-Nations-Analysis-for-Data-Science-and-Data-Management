@@ -105,7 +105,7 @@ class WealthOfNationsAnalyzer:
             return trends
         return None
     
-class Visualizer():
+class Visualizer:
     def __init__(self, analyzer: WealthOfNationsAnalyzer):
         self.analyzer = analyzer
         self.data = analyzer.data
@@ -140,8 +140,6 @@ class Visualizer():
     def plot_distribution_comparisons(self, save_path: str = None):
         return ""
     
-
-
 
 def main():
     print("Analysis results")

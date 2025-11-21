@@ -1,9 +1,9 @@
-## Project Topic
+# Project Topic
 Wealth of Nations: Economic Prosperity and Population Well-being Analysis
 
 A data science project analyzing the relationship between economic prosperity (GDP per capita) and population well-being indicators (life expectancy, healthcare spending, infant mortality) across countries from 2000-2022.
 
-## Project Overview
+# Project Overview
 This project explores global development data from the World Bank to answer:
 
 How does GDP per capita correlate with life expectancy?
@@ -21,32 +21,34 @@ As indicators it was taken following indicators:
 - Education_expenditure_pct_GDP
 - Population
 
-## Step-by-Step Installation:
+# Step-by-Step Installation:
 
 1. Clone the Repository
 bash# Clone this repository to your computer
-git clone https://github.com/ulugbekboy/wealth-of-nations-analysis.git
 
+git clone https://github.com/ulugbekboy/wealth-of-nations-analysis.git
 cd wealth-of-nations-analysis
-2. Create the virtual environment:
-bash# Create virtual environment named 'venv'
-python -m venv venv
-This creates a venv/ folder with a fresh Python installation.
+
+2. Create the virtual environment: bash# Create virtual environment named 'venv'
+
+"python -m venv venv" This creates a venv/ folder with a fresh Python installation.
+
 3. Activate Virtual Environment
+
 4. Install Dependencies
 
 Now that venv is activated, install the required packages:
 
 pip install req.txt
 
-wbgapi (https://pypi.org/project/wbgapi/) - World Bank API access
-pandas - Data manipulation
-numpy - Numerical computing
-scipy - Scientific computing
-matplotlib - Plotting
-seaborn - Statistical visualization
+- wbgapi (https://pypi.org/project/wbgapi/) - World Bank API access
+- pandas - Data manipulation
+- numpy - Numerical computing
+- scipy - Scientific computing
+- matplotlib - Plotting
+- seaborn - Statistical visualization
 
-## How to Run the Analysis
+# How to Run the Analysis
 
 On Terminal -> python project.py
 
@@ -62,7 +64,8 @@ On Terminal -> python project.py
 10. Generates 5 plots via streamlit
 11. Saves to outputs/figures/ generated visualization files
 
-## Data Sources (https://pypi.org/project/wbgapi/) 
+# Data Sources 
+(https://pypi.org/project/wbgapi/) 
 
 Source: World Bank Open Data
 API Package: wbgapi Python library
