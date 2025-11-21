@@ -69,7 +69,6 @@ class WealthOfNationsAnalyzer:
     def compute_correlation(self) -> pd.DataFrame:
         all_data = list(self.indicators.values())
         correlation_matrix = self.data[all_data].corr()   # find the correlations of the indicator values
-        print(correlation_matrix)
         return correlation_matrix
     
     def compute_statistics(self) -> Dict:
@@ -82,7 +81,6 @@ class WealthOfNationsAnalyzer:
                 "min":np.nanmin(self.data[indicator]),
                 "max":np.nanmax(self.data[indicator])
             }
-        print(stats_dict)
         return stats_dict
     
     def analyze_gdp_life_expectancy(self) -> Tuple[float,float]:
@@ -108,10 +106,45 @@ class WealthOfNationsAnalyzer:
         return None
     
 class Visualizer():
-    pass
+    def __init__(self, analyzer: WealthOfNationsAnalyzer):
+        self.analyzer = analyzer
+        self.data = analyzer.data
+        print(self.data)
+
+
+    def plot_correlation_heatmap(self,save_path: str =None):
+
+        corr_matrix = self.analyzer.compute_correlation()
+        print(corr_matrix)
+
+        plt.figure(figsize=(12,10))
+        sns.heatmap(corr_matrix)
+
+        plt.title("Correlation Matrix: Economic and Well-Being Indicators,", fontsize = 16)
+        plt.tight_layout()
+
+        if save_path:
+            plt.savefig(save_path,dpi=300)
+
+        plt.show()
+
+    def plot_gdp_and_life_expectancy(self, save_path: str = None):
+        return ""
+    
+    def plot_time_series_by_income(self, save_path: str = None):
+        return ""
+    
+    def plot_health_care_and_mortality(self, save_path: str = None):
+        return ""
+    
+    def plot_distribution_comparisons(self, save_path: str = None):
+        return ""
+    
+
+
 
 def main():
-    print("Analysis result")
+    print("Analysis results")
     analyzer = WealthOfNationsAnalyzer(start_year=2000,end_year=2022)
     analyzer.fetching()
     analyzer.clean_data()
@@ -124,6 +157,35 @@ def main():
         for stat_name, stat_value in values.items():
             print(f"{stat_name.capitalize()}:{stat_value:,.2f}")
 
+
+    print("CORRELATION ANALYSIS: GDP per Capita vs Life Expectancy")
+
+    corr, p_value  = analyzer.analyze_gdp_life_expectancy()
+    if corr is not None:
+        print(f"Pearson Correlation Coefficient is {corr:.4f}")
+        print(f"P-vlue is {p_value:.4e}")
+        print(f"Interpretation: {'Strong' if abs(corr) > 0.7 else 'Moderate' if abs(corr) > 0.4 else 'Weak'} {'positive' if corr > 0 else 'negative'} correlation")
+ 
+    print("VISUALIZATIONS ...")
+
+    visualizer = Visualizer(analyzer)
+
+    print("1. Creating correlation heatmap...")
+    visualizer.plot_correlation_heatmap()
+
+    print("2. Creating GDP vs Life Expectancy scatter plots...")
+    visualizer.plot_gdp_and_life_expectancy()
+  
+    print("3. Creating time series by income group...")
+    visualizer.plot_time_series_by_income()
+  
+    print("4. Creating healthcare vs mortality analysis...")
+    visualizer.plot_health_care_and_mortality()
+  
+    print("5. Creating distribution comparisons...")
+    visualizer.plot_distribution_comparisons()
+
+    print("ANALYSIS COMPLETED!")
 
 
 if __name__ == "__main__":
