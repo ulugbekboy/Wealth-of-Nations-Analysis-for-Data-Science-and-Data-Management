@@ -9,6 +9,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 from typing import List, Dict, Tuple
 
+def format_number(x):
+    try:
+        return f"{x:,.2f}".replace(",", " ")
+    except:
+        return x
+
 
 class WealthOfNationsAnalyzer:
     def __init__(self, start_year: int = 2000, end_year: int = 2022):
@@ -76,7 +82,8 @@ class WealthOfNationsAnalyzer:
                 "max": np.nanmax(self.data[indicator])
             }
         return stats_dict
-    
+
+ 
     def get_top_bottom_countries(self, indicator: str, year: int, n: int = 10):
         """Get 10 top and bottom countries for a specific indicator and year"""
         year_data = self.data[self.data['year'] == year].dropna(subset=[indicator])
@@ -96,6 +103,49 @@ class WealthOfNationsAnalyzer:
         bottom = bottom.rename(columns={'economy': 'Country'})
         
         return top, bottom
+
+    """
+
+    def get_top_bottom_countries(self, indicator: str, year: int, n: int = 10, 
+                                    selected_countries: List[str] = None, 
+                                    selected_income_groups: List[str] = None):
+            Get top and bottom N countries for a specific indicator and year with filtering
+            year_data = self.data[self.data['year'] == year].copy()
+            
+            # Apply filters if provided
+            if selected_countries:
+                year_data = year_data[year_data['economy'].isin(selected_countries)]
+            
+            if selected_income_groups:
+                year_data = year_data[year_data['income_group'].isin(selected_income_groups)]
+            
+            year_data = year_data.dropna(subset=[indicator])
+            
+            # Determine if higher is better or lower is better
+            lower_is_better = indicator in ['Infant_mortality_rate']
+            
+            if lower_is_better:
+                top = year_data.nsmallest(n, indicator)[['economy', indicator, 'income_group', 'region']].copy()
+                bottom = year_data.nlargest(n, indicator)[['economy', indicator, 'income_group', 'region']].copy()
+            else:
+                top = year_data.nlargest(n, indicator)[['economy', indicator, 'income_group', 'region']].copy()
+                bottom = year_data.nsmallest(n, indicator)[['economy', indicator, 'income_group', 'region']].copy()
+            
+            # Rename columns for better display
+            top = top.rename(columns={
+                'economy': 'Country',
+                'income_group': 'Income Group',
+                'region': 'Region'
+            })
+            bottom = bottom.rename(columns={
+                'economy': 'Country',
+                'income_group': 'Income Group',
+                'region': 'Region'
+            })
+            
+            return top, bottom
+
+"""
 
 class Visualizer:
     def __init__(self, analyzer: WealthOfNationsAnalyzer):
@@ -295,11 +345,6 @@ def create_indicator_tab(visualizer, indicator_key, indicator_name, selected_cou
             hide_index=True
         )
 
-def format_number(x):
-    try:
-        return f"{x:,.2f}".replace(",", " ")
-    except:
-        return x
 
 def main():
     st.set_page_config(
