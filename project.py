@@ -6,14 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from typing import List
 
-# format numbers
-def format_number(x):
-    try:
-        return f"{x:,.2f}".replace(",", " ")
-    except:
-        return x
-    
-## class for fetching, cleaning, statistical computations 
+## class for fetching and cleaning data from wbgapi
 class WealthOfNationsAnalyzer:
     def __init__(self, start_year: int = 2000, end_year: int = 2022):
         self.start_year = start_year
@@ -36,7 +29,6 @@ class WealthOfNationsAnalyzer:
                 economy='all',
                 time=range(self.start_year, self.end_year + 1)
             )
-            
             records = []
             for item in data:
                 year_str = str(item['time']).replace('YR', '')
@@ -61,7 +53,6 @@ class WealthOfNationsAnalyzer:
                 self.data[indicator] = pd.to_numeric(self.data[indicator], errors="coerce")
         
         self.data = self.data.dropna(how="all", subset=list(self.indicators.values()))
-        
         countries = wb.economy.DataFrame()
         country_list = list(wb.economy.list())
         code_to_name = {c['id']: c['value'] for c in country_list}
@@ -70,9 +61,7 @@ class WealthOfNationsAnalyzer:
         
         income_dict = countries["incomeLevel"].to_dict()   
         self.data["income_group"] = self.data["economy"].map(income_dict)
-        region_dict = countries["region"].to_dict()
-        self.data["region"] = self.data["economy"].map(region_dict)
-
+        
         self.data = self.data[self.data['income_group'].notna() & (self.data['income_group'] != '')]
 
         return self.data
@@ -82,48 +71,44 @@ class WealthOfNationsAnalyzer:
             raise ValueError("No data to save")
         
         if filename is None:
-            filename = f'world_bank_data_{self.start_year}_{self.end_year}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
+            filename = f'world_bank_data_{self.start_year}_{self.end_year}.xlsx'
         
         with pd.ExcelWriter(filename, engine='openpyxl') as writer:
             self.data.to_excel(writer, sheet_name='All_Data', index=False)
-            
-            summary_data = {
-                'Indicator Code': list(self.indicators.keys()),
-                'Indicator Name': list(self.indicators.values())
-            }
-            summary_df = pd.DataFrame(summary_data)
-            summary_df.to_excel(writer, sheet_name='Indicators_Info', index=False)
-        
+
         return filename
     
-    def get_top_bottom_countries(self, indicator: str, year: int, n: int = 10):
-        year_data = self.data[self.data['year'] == year].dropna(subset=[indicator])
-        lower_is_better = indicator in ['Infant_mortality_rate']
-        
-        if lower_is_better:
-            top = year_data.nsmallest(n, indicator)[['economy', indicator, 'income_group']].copy()
-            top = top.sort_values(by=indicator, ascending=False)
-            bottom = year_data.nlargest(n, indicator)[['economy', indicator, 'income_group']].copy()
-            bottom = bottom.sort_values(by=indicator, ascending=False)
-            
-        else:
-            top = year_data.nlargest(n, indicator)[['economy', indicator, 'income_group']].copy()
-            top = top.sort_values(by=indicator, ascending=False)
-            
-            bottom = year_data.nsmallest(n, indicator)[['economy', indicator, 'income_group']].copy()
-            bottom = bottom.sort_values(by=indicator, ascending=False)
-        
-        return top, bottom  
-   
 # class for all visualizations and plots
 class Visualizer:
     def __init__(self, analyzer: WealthOfNationsAnalyzer):
         self.analyzer = analyzer
         self.data = analyzer.data
     
-    def create_country_trend_plot(self, selected_countries: List[str], selected_income_groups: List[str], 
-                                   indicator: str, indicator_name: str):
-        """Create trend plot for selected countries and income groups with visible data labels"""
+    def create_top_bottom_tables(self, indicator: str, year: int):
+        year_data = self.data[self.data['year'] == year].dropna(subset=[indicator])
+        
+        lower_is_better = indicator in ['Infant_mortality_rate']
+        
+        if lower_is_better:
+            top = year_data.nsmallest(10, indicator)[['economy', indicator, 'income_group']].copy()
+            top = top.sort_values(by=indicator, ascending=True)
+            
+            bottom = year_data.nlargest(10, indicator)[['economy', indicator, 'income_group']].copy()
+            
+            bottom = bottom.sort_values(by=indicator, ascending=True)
+        else:
+            top = year_data.nlargest(10, indicator)[['economy', indicator, 'income_group']].copy()
+            top = top.sort_values(by=indicator, ascending=False)
+            
+            bottom = year_data.nsmallest(10, indicator)[['economy', indicator, 'income_group']].copy()
+            bottom = bottom.sort_values(by=indicator, ascending=False)
+        
+        top = top.rename(columns={'economy': 'Country'})
+        bottom = bottom.rename(columns={'economy': 'Country'})
+        
+        return top, bottom
+ 
+    def create_country_trend_plot(self, selected_countries: List[str], selected_income_groups: List[str], indicator: str, indicator_name: str):
         fig = go.Figure()
         
         if selected_countries:
@@ -144,7 +129,6 @@ class Visualizer:
                         legendgrouptitle_text='Countries'
                     ))
         
-        # Add income group trends (aggregated)
         if selected_income_groups:
             for income_group in selected_income_groups:
                 group_data = self.data[self.data['income_group'] == income_group].groupby('year')[indicator].mean().reset_index()
@@ -164,7 +148,6 @@ class Visualizer:
                     ))
         
         if not selected_countries and not selected_income_groups:
-            # Show nothing if no selection
             fig.add_annotation(
                 text="Please select countries or income groups from the sidebar",
                 xref="paper", yref="paper",
@@ -173,7 +156,6 @@ class Visualizer:
             )
         
         fig.update_layout(
-            title=f'{indicator_name} Trends Over Time',
             xaxis_title='Year',
             yaxis_title=indicator_name,
             hovermode='x unified',
@@ -182,15 +164,9 @@ class Visualizer:
             showlegend=True,
             legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02)
         )
-        
         return fig
 
-    def create_top_bottom_tables(self, indicator: str, year: int):
-        top, bottom = self.analyzer.get_top_bottom_countries(indicator, year, n=10)
-        return top, bottom
-
     def plot_wealth_wellbeing_correlation(self):
-        """Wealth (GDP) vs Well-being indicators over time - animated"""
         data_with_years = self.data.dropna(subset=['GDP_per_capita', 'Life_expectancy', 'income_group'])
         
         fig = px.scatter(
@@ -206,7 +182,6 @@ class Visualizer:
             size_max=60,
             range_x=[100, 200000],
             range_y=[30, 90],
-            title='The Wealth of Nations: Economic Prosperity vs Life Expectancy (Animated)',
             labels={
                 'GDP_per_capita': 'GDP per Capita (USD, log scale)',
                 'Life_expectancy': 'Life Expectancy (years)',
@@ -215,40 +190,34 @@ class Visualizer:
             template='plotly_white',
             height=700
         )
-        
         fig.update_traces(marker=dict(opacity=0.7, line=dict(width=0.5, color='white')))
-        
         return fig
 
 # template for tabs in streamlit
-def create_indicator_tab(visualizer, indicator_key, indicator_name, selected_countries, 
-                        selected_income_groups, selected_year):
+def create_indicator_tab(visualizer, indicator_key, indicator_name, selected_countries,selected_income_groups, selected_year):
         
     st.header(f"{indicator_name} Analysis")
-
-    st.subheader("Trends Over Time")
     trend_fig = visualizer.create_country_trend_plot(
         selected_countries, 
         selected_income_groups,
         indicator_key, 
         indicator_name
     )
-    
+    trend_fig.update_yaxes(tickformat=",.2f")
     st.plotly_chart(trend_fig, use_container_width=True)
     st.markdown("---")
     st.subheader(f"Top 10 Strong/Weak countries ({selected_year})")
     top_countries, bottom_countries = visualizer.create_top_bottom_tables(indicator_key, selected_year)
     
     col1, col2 = st.columns(2)
-        
     with col1:
         st.markdown("Top 10 Countries")
-        
-        styled_df = top_countries.style.background_gradient(
-            cmap="Greens",
-            subset=[indicator_key]
-        ).format({indicator_key: "{:.2f}"})
-        
+        styled_df = (
+            top_countries.style
+            .background_gradient(cmap="Greens", subset=[indicator_key])
+            .format({indicator_key: format_number})
+        )
+            
         st.dataframe(
             styled_df,
             use_container_width=True,
@@ -257,18 +226,27 @@ def create_indicator_tab(visualizer, indicator_key, indicator_name, selected_cou
 
     with col2:
         st.markdown("Bottom 10 Countries")
-        
-        styled_df = bottom_countries.style.background_gradient(
-            cmap="Reds_r",
-            subset=[indicator_key]
-        ).format({indicator_key: "{:.2f}"})
-        
+            
+        styled_df = (
+            bottom_countries.style
+            .background_gradient(cmap="Reds_r", subset=[indicator_key])
+            .format({indicator_key: format_number})
+        )
+            
         st.dataframe(
             styled_df,
             use_container_width=True,
             hide_index=True
         )
 
+
+# format numbers
+def format_number(x):
+    try:
+        return f"{x:,.2f}".replace(",", " ")
+    except:
+        return x
+    
 def main():
     st.set_page_config(
         page_title="Wealth of Nations Analysis Project",
@@ -278,6 +256,9 @@ def main():
     st.markdown("### Project #1: Economic Prosperity and Population Well-being Analysis by WBG")
     st.markdown("""
     Analysis of the relationship between economic prosperity indicators across countries using World Bank data.
+    """)
+    st.markdown("""
+    *Author: Ulugbek Nortojiev*
     """)
     
     ##sidebar block
@@ -295,8 +276,7 @@ def main():
         with st.spinner("Fetching data from World Bank API..."):
             analyzer.fetching()
             analyzer.clean_data()
-
-            analyzer.save_to_excel("world_bank_data_2002_2022.xlsx")
+            analyzer.save_to_excel()
         return analyzer
     
     analyzer = load_data(start_year, end_year)
@@ -306,7 +286,6 @@ def main():
     st.sidebar.header("Filter Options")
     
     countries_list = sorted(analyzer.data['economy'].unique().tolist())
-    
     select_all_countries = st.sidebar.checkbox("Select All Countries", value=False)
     
     if select_all_countries:
@@ -316,7 +295,7 @@ def main():
         selected_countries = st.sidebar.multiselect(
             "Choose Specific Countries",
             options=countries_list,
-            default=[],
+            default=["ITA"],
             help="Select countries to compare trends over time"
         )
     
@@ -391,24 +370,18 @@ def main():
                     "median": np.nanmedian(filtered_data[indicator]),
                     "std": np.nanstd(filtered_data[indicator]),
                     "min": np.nanmin(filtered_data[indicator]),
-                    "max": np.nanmax(filtered_data[indicator]),
+                    "max": np.nanmax(filtered_data[indicator])
                 }
-        print(filtered_stats_dict)
         filtered_stats_df = pd.DataFrame(filtered_stats_dict).T
- 
-        if not select_all_income and selected_income_groups:
-            st.caption(f"💰 Filtered by income groups: **{', '.join(selected_income_groups)}**")
         
         st.dataframe(filtered_stats_df.style.format(format_number), use_container_width=True)
-        
         st.markdown("---")
         st.subheader("Sample Data")
 
-        # Show filtered data
+        # Show filtered data and count
         st.markdown(f"*Displaying {len(filtered_data):,} records based on your selection*")
         st.dataframe(filtered_data, use_container_width=True, height=400)
         
-        # Add download button for filtered data
         csv = filtered_data.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="Download data as csv",
@@ -513,7 +486,6 @@ def main():
         st.subheader(f"Key Indicators Comparison ({int(selected_year)})")
         
         col1, col2, col3, col4 = st.columns(4)
-        
         with col1:
             gdp_1 = country_1_data['GDP_per_capita'].values[0] if len(country_1_data) > 0 else 0
             gdp_2 = country_2_data['GDP_per_capita'].values[0] if len(country_2_data) > 0 else 0
@@ -623,7 +595,7 @@ def main():
         st.markdown("---")
         
         # Time Series Comparison - All Indicators
-        st.subheader("⏱️ Trends Over Time Comparison")
+        st.subheader("Trends Over Time Comparison")
         
         indicators_to_plot = {
             'GDP_per_capita': 'GDP per Capita (USD)',
@@ -669,9 +641,7 @@ def main():
         )
         
         st.plotly_chart(fig_timeseries, use_container_width=True)
-        
         st.markdown("---")
-
         st.subheader("Detailed Statistics Comparison")
         comparison_table = []
         
@@ -691,7 +661,6 @@ def main():
                         'Difference': f"{diff:,.2f}",
                         '% Difference': f"{pct_diff:.1f}%"
                     })
-        
         if comparison_table:
             comparison_df = pd.DataFrame(comparison_table)
             st.dataframe(
@@ -699,14 +668,8 @@ def main():
                 use_container_width=True,
                 hide_index=True
             )
-    
-    
-    
-        
-        st.markdown("---")
-        
-        st.subheader("Economic Change vs Life Expectancy Over Time")
-        
+        st.markdown("---")    
+        st.subheader("Life Expectancy among income-group countries (animated)")
         fig_animated = visualizer.plot_wealth_wellbeing_correlation()
         st.plotly_chart(fig_animated, use_container_width=True)
         

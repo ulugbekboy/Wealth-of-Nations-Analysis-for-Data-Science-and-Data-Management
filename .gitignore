@@ -1,5 +1,7 @@
 # Virtual Environment
 venv/
+.env/
+.venv/
 
 # Python
 __pycache__/
@@ -8,6 +10,8 @@ __pycache__/
 *.pyd
 .Python
 
-# IDEs
+# --- VS Code ---
 .vscode/
 
+# --- OS files ---
+.DS_Store
