@@ -3,7 +3,6 @@ Wealth of Nations: Economic Prosperity and Population Well-being Analysis
 
 A data science project analyzing the relationship between economic prosperity (GDP per capita) and population well-being indicators (life expectancy, healthcare spending, infant mortality) across countries from 2000-2022.
 
-
 # Project Overview
 This project is an interactive Streamlit application designed to analyze the relationship between economic prosperity and population well-being across countries using World Bank open data.
 
@@ -67,3 +66,4 @@ Coverage: 265 economies, 2000-2022 (22 years)
 Total data points: ~30,000+ observations
 
 Last Updated: 30 November 2025
+Author: Ulugbek Nortojiev

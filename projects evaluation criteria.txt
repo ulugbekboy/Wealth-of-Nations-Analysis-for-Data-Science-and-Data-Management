@@ -1,4 +1,3 @@
-
 The Wealth of Nations
 Dive into the intricate relationship between a country's economic prosperity and the well-being of its population. This project invites you to explore decades of global development data to uncover trends and correlations. You could analyze how indicators like GDP per capita relate to life expectancy, healthcare spending, or child mortality rates. Create compelling visualizations, such as time-series charts or global maps, to tell a story about global health and economics. The goal is to build an analytical project that reveals patterns in how nations thrive. Data for this project can be sourced directly from the World Bank Open Data portal or via its Python API.
 
@@ -48,21 +47,29 @@ This criterion evaluates the structure and quality of your codebase. A well-orga
 4.plot_health_care_and_mortality
 5.plot_distribution_comparisons
 
-
 3. Input/Output (5 points)
 This criterion assesses your ability to work with data from external sources. The project should successfully load data from at least one external source (e.g., CSV, JSON, Excel, a database, or an API). The chosen data source should be appropriate for the analytical goals of the project. The code should handle data loading cleanly, addressing possible errors. The project may also demonstrate output capabilities by saving or displaying results, such as a summary table or generated plots.
 
-Using World Bank Group data - (https://pypi.org/project/wbgapi/)
+Input: Using World Bank Group data - (https://pypi.org/project/wbgapi/)
+Output: Wealth-of-Nations-Analysis-for-Data-Science-and-Data-Management/world_bank_data_2002_2022.xlsx
 
 4. Data Manipulation (5 points)
 This criterion focuses on the core task of handling data, evaluating your ability to use a data manipulation library like pandas to clean, transform, reshape, and prepare your data for the analysis and visualization stages.
 
+- import pandas as pd
+
 5. Scientific Computing (5 points)
 This criterion assesses your ability to perform numerical and statistical computations on your data, using libraries like numPy or sciPy to extract quantitative insights, perform calculations, and prepare data for more complex modeling.
+
+- import numpy as np
 
 6. Visualisation (5 points)
 This criterion evaluates your ability to communicate your findings visually. This involves creating clear and informative plots that reveal patterns, trends, and insights using a visualisation library, such as matplotlib or seaborn.
 
+- import plotly.express as px - for quick, simple, high-level plots directly from DataFrames
+- import plotly.graph_objects as go - for custom, complex, low-level plots where you need  control over traces, layout, and styling.
+
 7. BONUS: Web Application (3 points)
 This optional criterion offers a chance to earn bonus points by making your project interactive and accessible. By wrapping your analysis in a simple web application, using a framework like streamlit, you could create a dynamic dashboard that allows users to explore your findings in an engaging way.
 
+*streamlit run project.py
